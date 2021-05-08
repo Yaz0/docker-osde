@@ -10,14 +10,15 @@ ENV TERM xterm-256color
 
 # Install all other packages.
 RUN apt-get update && yes | unminimize && DEBIAN_FRONTEND=noninteractive \
-	apt-get install -y \
+	apt-get install -y --fix-missing\
 		ca-certificates curl apt-transport-https build-essential wget git-core \
 		unzip python less man-db htop tmux cloc tree \
 		openssh-client shellcheck lsof p7zip zip gettext libtool \
 		libtool-bin autoconf automake pkg-config cmake clang libclang-dev \
 		universal-ctags telnet python3-neovim ripgrep locales sshpass \
 		global sudo python3-virtualenv python3-dev gcc-multilib \
-		clang-format git-extras tmate inotify-tools rsync vim && \
+		clang-format git-extras tmate inotify-tools rsync vim \
+		bear bison flex vim-nox mono-complete golang nodejs default-jdk npm && \
 	rm -rf /var/lib/apt/lists/*
 
 # Configure system locale.
@@ -44,5 +45,16 @@ RUN wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_
 EXPOSE 1313
 
 WORKDIR /home/Workspace
+
+#Install Vundle 
+RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+#Add YouCompleteMe
+RUN git clone https://github.com/ycm-core/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
+RUN cd ~/.vim/bundle/YouCompleteMe && git submodule update --init --recursive && ./install.py --all
+#Install .vimrc
+COPY files/.vimrc /root/
+#Install Vim plugins
+RUN vim +PluginInstall +qall
+
 
 
