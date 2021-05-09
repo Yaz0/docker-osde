@@ -56,7 +56,41 @@ COPY files/.vimrc /root/
 #Install Vim plugins
 RUN vim +PluginInstall +qall
 
-COPY files/entrypoint.sh /usr/local/bin/
-ENTRYPOINT [entrypoint.sh] 
+#Install prezto
+RUN git clone --recursive https://github.com/sorin-ionescu/prezto.git \
+		/etc/zsh/prezto && \
+	cd /etc/zsh/prezto; git checkout --detach 8a967fc && \
+	echo "source /etc/zsh/prezto/runcoms/zlogin" > /etc/zsh/zlogin && \
+	echo "source /etc/zsh/prezto/runcoms/zlogout" > /etc/zsh/zlogout && \
+	echo "source /etc/zsh/prezto/runcoms/zshenv" > /etc/zsh/zshenv && \
+	echo "source /etc/zsh/prezto/runcoms/zpreztorc" >> /etc/zsh/zshrc && \
+	echo "source /etc/zsh/prezto/runcoms/zshrc" >> /etc/zsh/zshrc && \
+	echo "source /etc/zsh/prezto/runcoms/zprofile" >> /etc/zsh/zprofile && \
+	echo "ZPREZTODIR=/etc/zsh/prezto" >> "/etc/zsh/zshrc" && \
+	echo "source \${ZPREZTODIR}/init.zsh" >> "/etc/zsh/zshrc" && \
+	sed -ri "s/theme 'sorin'/theme 'skwp'/g" \
+		/etc/zsh/prezto/runcoms/zpreztorc && \
+	sed -ri '/directory/d' /etc/zsh/prezto/runcoms/zpreztorc && \
+	sed -ri "s/'prompt'/'syntax-highlighting' \
+		'history-substring-search' 'prompt'/g" /etc/zsh/prezto/runcoms/zpreztorc
+
+#Install fzf
+RUN git clone --branch 0.23.1 --depth 1 https://github.com/junegunn/fzf.git \
+		/tmp/fzf && \
+	/tmp/fzf/install --bin && \
+	cp /tmp/fzf/bin/* /usr/local/bin && \
+	mkdir -p /usr/share/fzf/ && \
+	cp /tmp/fzf/shell/*.zsh /usr/share/fzf/ && \
+	rm -rf /tmp/fzf && \
+	echo "source /usr/share/fzf/key-bindings.zsh" >> /etc/zsh/zshrc && \
+	echo "source /usr/share/fzf/completion.zsh" >> /etc/zsh/zshrc && \
+	echo "export FZF_DEFAULT_COMMAND='rg --files --hidden --follow'" \
+		>> /etc/zsh/zshrc && \
+	echo "export FZF_DEFAULT_OPTS='--height 40% --reverse'" \
+		>> /etc/zsh/zshrc
+
+
+COPY files/entrypoint.sh /usr/local/bin
+ENTRYPOINT ["entrypoint.sh"] 
 
 
