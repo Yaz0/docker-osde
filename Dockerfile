@@ -12,12 +12,12 @@ ENV TERM xterm-256color
 RUN apt-get update && yes | unminimize && DEBIAN_FRONTEND=noninteractive \
 	apt-get install -y --fix-missing\
 		ca-certificates curl apt-transport-https build-essential wget git-core \
-		unzip python less man-db htop tmux cloc tree \
+		unzip python less man-db htop tmux cloc tree zsh\
 		openssh-client shellcheck lsof p7zip zip gettext libtool \
 		libtool-bin autoconf automake pkg-config cmake clang libclang-dev \
 		universal-ctags telnet python3-neovim ripgrep locales sshpass \
 		global sudo python3-virtualenv python3-dev gcc-multilib \
-		clang-format git-extras tmate inotify-tools rsync vim \
+		clang-format git-extras tmate inotify-tools rsync vim gosu\
 		bear bison flex vim-nox mono-complete golang nodejs default-jdk npm && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -56,5 +56,7 @@ COPY files/.vimrc /root/
 #Install Vim plugins
 RUN vim +PluginInstall +qall
 
+COPY files/entrypoint.sh /usr/local/bin/
+ENTRYPOINT [entrypoint.sh] 
 
 
