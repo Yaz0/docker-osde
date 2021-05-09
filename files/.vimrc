@@ -10,6 +10,7 @@ set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ycm-core/YouCompleteMe'
+Plugin 'itchyny/lightline.vim'
 call vundle#end()
 
 " For plugins to load correctly
@@ -88,5 +89,5 @@ map <leader>l :set list!<CR>
 set t_Co=256
 set background=dark
 
-
+set noshowmode
 
