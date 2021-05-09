@@ -91,6 +91,7 @@ RUN git clone --branch 0.23.1 --depth 1 https://github.com/junegunn/fzf.git \
 
 
 COPY files/entrypoint.sh /usr/local/bin
+COPY files/tmux.conf /etc/tmux.conf
 ENTRYPOINT ["entrypoint.sh"] 
 
 
