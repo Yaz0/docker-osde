@@ -11,6 +11,7 @@ call vundle#begin()
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'itchyny/lightline.vim'
+Plugin 'vim-syntastic/syntastic'
 call vundle#end()
 
 " For plugins to load correctly
@@ -62,6 +63,9 @@ set laststatus=2
 set showmode
 set showcmd
 
+" Don't use swapfiles
+set noswapfile
+
 " Searching
 nnoremap / /\v
 vnoremap / /\v
@@ -91,3 +95,12 @@ set background=dark
 
 set noshowmode
 
+" Syntastic recommended settings
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
