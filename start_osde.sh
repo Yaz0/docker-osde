@@ -87,7 +87,7 @@ docker run --privileged -it --rm -P \
 	-e DISPLAY="$DISPLAY" \
 	-e XAUTHORITY=/var/run/xauthority \
 	-v /etc/localtime:/etc/localtime \
-	-v "$workspace_path":/home/Workspace \
+	-v "$workspace_path":/opt/workspace \
 	-v /tmp/.X11-unix:/tmp/.X11-unix \
 	-v "$HOME"/.Xauthority:/var/run/xauthority \
 	-v "$storage_path"/home:/home/$USER_NAME/storage \

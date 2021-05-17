@@ -4,10 +4,10 @@ set nocompatible
 filetype off
 
 " set the runtime path to include Vundle and initialize "
-set rtp+=~/.vim/bundle/Vundle.vim
+set rtp+=/etc/vim/bundle/Vundle.vim
 
 "Load plugins
-call vundle#begin()
+call vundle#begin('/etc/vim/bundle')
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'itchyny/lightline.vim'

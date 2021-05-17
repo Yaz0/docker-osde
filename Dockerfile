@@ -44,15 +44,15 @@ RUN wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_
 	rm -rf /tmp/hugo.deb
 EXPOSE 1313
 
-WORKDIR /home/Workspace
+WORKDIR /opt/workspace
 
 #Install Vundle 
-RUN git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+RUN git clone https://github.com/VundleVim/Vundle.vim.git /etc/vim/bundle/Vundle.vim
 #Add YouCompleteMe
-RUN git clone https://github.com/ycm-core/YouCompleteMe.git ~/.vim/bundle/YouCompleteMe
-RUN cd ~/.vim/bundle/YouCompleteMe && git submodule update --init --recursive && ./install.py --all
+RUN git clone https://github.com/ycm-core/YouCompleteMe.git /etc/vim/bundle/YouCompleteMe
+RUN cd /etc/vim/bundle/YouCompleteMe && git submodule update --init --recursive && ./install.py --all
 #Install .vimrc
-COPY files/.vimrc /root/
+COPY files/.vimrc /etc/vim/vimrc.local
 #Install Vim plugins
 RUN vim +PluginInstall +qall
 
