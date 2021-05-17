@@ -18,7 +18,7 @@ RUN apt-get update && yes | unminimize && DEBIAN_FRONTEND=noninteractive \
 		universal-ctags telnet python3-neovim ripgrep locales sshpass \
 		global sudo python3-virtualenv python3-dev gcc-multilib \
 		clang-format git-extras tmate inotify-tools rsync vim gosu\
-		bear bison flex vim-nox mono-complete golang nodejs default-jdk npm && \
+		bear bison flex vim-nox mono-complete golang nodejs default-jdk npm gdb && \
 	rm -rf /var/lib/apt/lists/*
 
 # Configure system locale.
