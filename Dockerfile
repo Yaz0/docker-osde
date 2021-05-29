@@ -12,12 +12,12 @@ ENV TERM xterm-256color
 RUN apt-get update && yes | unminimize && DEBIAN_FRONTEND=noninteractive \
 	apt-get install -y --fix-missing\
 		ca-certificates curl apt-transport-https build-essential wget git-core \
-		unzip python less man-db htop tmux cloc tree zsh\
+		unzip python less man-db htop cloc tree zsh\
 		openssh-client shellcheck lsof p7zip zip gettext libtool \
 		libtool-bin autoconf automake pkg-config cmake clang libclang-dev \
 		universal-ctags telnet python3-neovim ripgrep locales sshpass \
 		global sudo python3-virtualenv python3-dev gcc-multilib \
-		clang-format git-extras tmate inotify-tools rsync vim gosu\
+		clang-format git-extras tmate inotify-tools rsync vim gosu libncurses-dev libevent-dev\
 		bear bison flex vim-nox mono-complete golang nodejs default-jdk npm gdb && \
 	rm -rf /var/lib/apt/lists/*
 
@@ -45,6 +45,10 @@ RUN wget https://github.com/gohugoio/hugo/releases/download/v0.80.0/hugo_0.80.0_
 EXPOSE 1313
 
 WORKDIR /opt/workspace
+
+#Install tmux 2.4
+RUN git clone https://github.com/tmux/tmux.git /tmp/tmux && cd /tmp/tmux && git checkout 2.4 \
+	&& sh autogen.sh && ./configure && make && make install
 
 #Install Vundle 
 RUN git clone https://github.com/VundleVim/Vundle.vim.git /etc/vim/bundle/Vundle.vim

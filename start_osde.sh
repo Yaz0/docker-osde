@@ -51,7 +51,7 @@ script_name=$(basename $0)
 
 workspace_path=$(pwd)
 storage_path=$HOME/osde
-executable_path="/usr/bin/tmux"
+executable_path="/usr/local/bin/tmux"
 
 while getopts "hw:s:e:" opt; do
 	case ${opt} in
